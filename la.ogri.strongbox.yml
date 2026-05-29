@@ -1,18 +1,18 @@
 app-id: la.ogri.strongbox
 runtime: org.freedesktop.Platform
-runtime-version: '24.08'
+runtime-version: '25.08'
 sdk: org.freedesktop.Sdk
-sdk-extensions: 
+sdk-extensions:
     - org.freedesktop.Sdk.Extension.openjdk17
 
 command: strongbox
 
 finish-args:
-    - "--socket=x11"
-    - "--share=network"
-    - "--device=dri"
-    - "--filesystem=host"
-    - "--share=ipc"
+    - --socket=x11
+    - --share=network
+    - --device=dri
+    - --filesystem=host
+    - --share=ipc
 
 modules:
     - name: openjdk
@@ -22,6 +22,12 @@ modules:
 
     - name: strongbox
       buildsystem: simple
+      build-commands:
+        - install -D metainfo.xml /app/share/metainfo/la.ogri.strongbox.metainfo.xml
+        - install -D strongbox.desktop /app/share/applications/la.ogri.strongbox.desktop
+        - install -D -m644 strongbox.svg /app/share/icons/hicolor/scalable/apps/la.ogri.strongbox.svg
+        - install -D -m755 autogen.sh /app/bin/strongbox
+        - install -D app.jar /app/bin/app.jar
       sources:
         - type: file
           url: https://github.com/ogri-la/strongbox/releases/download/7.7.0/strongbox-7.7.0-standalone.jar
@@ -43,11 +49,4 @@ modules:
         - type: file
           url: https://raw.githubusercontent.com/ogri-la/strongbox-flatpak/7.7.0/strongbox.svg
           sha256: e8d68fd32e96834d12940df27c2fd4c05fa303c1473e8f50b6a3a93f283bc2fc
-
-      build-commands:
-        - install -D metainfo.xml /app/share/metainfo/la.ogri.strongbox.metainfo.xml
-        - install -D strongbox.desktop /app/share/applications/la.ogri.strongbox.desktop
-        - install -D -m644 strongbox.svg /app/share/icons/hicolor/scalable/apps/la.ogri.strongbox.svg
-        - install -D -m755 autogen.sh /app/bin/strongbox
-        - install -D app.jar /app/bin/app.jar
 
